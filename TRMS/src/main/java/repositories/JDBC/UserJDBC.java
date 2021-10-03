@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserJDBC implements CrudRepository<User>{
+public class UserJDBC implements UserRepo{
 
     ConnectionUtil cu = ConnectionUtil.getConnectionUtil();
 

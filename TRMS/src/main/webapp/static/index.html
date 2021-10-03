@@ -21,7 +21,7 @@
         }
 
         h1{
-          margin: 5px 5px;
+            margin: 5px 5px;
         }
 
         #navBar{
@@ -39,48 +39,48 @@
 </head>
 <body>
 
-    <div class="container">
-        <div id="navBar">
+<div class="container">
+    <div id="navBar">
             <span>
                 <a id = "indexLink" href = "index.html">Home Page</a>
             </span>
-        </div>
-
-        <div id="form">
-            <form action="/TRMS/login" method="POST">
-                <h1>Revature Tuition Reimbursement Management System</h1>
-                <div class="form-group-row">
-                    <label for="username">Username:
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
-                    </label>
-                </div>
-
-                <div class="form-group-row">
-                <label for="password">Password:
-                <input type="password" class="form-control" id="password" name="password"  placeholder="Password">
-                </label>
-                </div>
-
-                <div>
-<!--                <button id="loginBtn" onclick="login()" type="button" class="btn btn-primary">Login</button>-->
-                    <input id="loginBtn" type="submit" class="btn btn-primary" onclick="login()" value="Log In">
-                </div>
-
-                <p id="success"></p>
-            </form>
-
-        </div>
-
-        <div id="welcome">
-            <h1 id="message"></h1>
-            <div id="button"></div>
-        </div>
     </div>
-    
+
+    <div id="form">
+        <form action="/TRMS/login" method="POST">
+            <h1>Revature Tuition Reimbursement Management System</h1>
+            <div class="form-group-row">
+                <label for="username">Username:
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                </label>
+            </div>
+
+            <div class="form-group-row">
+                <label for="password">Password:
+                    <input type="password" class="form-control" id="password" name="password"  placeholder="Password">
+                </label>
+            </div>
+
+            <div>
+                <!--                <button id="loginBtn" onclick="login()" type="button" class="btn btn-primary">Login</button>-->
+                <input id="loginBtn" type="submit" class="btn btn-primary" onclick="login()" value="Log In">
+            </div>
+
+            <p id="success"></p>
+        </form>
+
+    </div>
+
+    <div id="welcome">
+        <h1 id="message"></h1>
+        <div id="button"></div>
+    </div>
+</div>
+
 </body>
 
 <script src="./js/login.js">
-    
+
 
 </script>
 </html>

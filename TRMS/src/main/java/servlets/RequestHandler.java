@@ -28,8 +28,8 @@ public class RequestHandler {
 
         controllerMap.put("login", new LoginController());
         controllerMap.put("users", new UserController());
-//        controllerMap.put("books", new BookController());
-//        controllerMap.put("authors", new AuthorController());
+        controllerMap.put("reimbursements", new ReimbursementController());
+        controllerMap.put("employees", new EmployeeController());
 
     }
 

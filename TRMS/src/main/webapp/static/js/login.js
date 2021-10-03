@@ -3,7 +3,6 @@ async function login() {
     let url = "http://localhost:8080/TRMS/login";
 
     let user = {
-
         username: document.getElementById('username').value,
         password: document.getElementById('password').value
     }
@@ -22,5 +21,6 @@ async function login() {
         })
         .catch(error => {
             console.log(error);
-        });
+        })
+
 }

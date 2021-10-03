@@ -12,7 +12,7 @@ import java.util.List;
 public class UserServices {
 
 //    UserJDBC userRepo = new UserJDBC();
-    UserJDBC userRepo = new UserJDBC();
+    UserRepo userRepo = new UserJDBC();
 
     public boolean login(String username, String password) {
 

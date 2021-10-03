@@ -5,11 +5,11 @@ import models.User;
 
 import java.util.List;
 
-public interface ReimbursementRepo extends CrudRepository{
+public interface ReimbursementRepo extends CrudRepository<Reimbursement>{
 
-    User add(Reimbursement reimbursement);
+    Reimbursement add(Reimbursement reimbursement);
 
-    User getById(Integer id);
+    Reimbursement getById(Integer id);
 
     List<Reimbursement> getAll();
 

@@ -2,6 +2,8 @@ package models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 @Table(name="reimbursements")
@@ -12,24 +14,24 @@ public class Reimbursement {
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "employee_id")
-    private Employee employee_id;
+    private Employee employee;
 
     @Column(name = "event_type")
     private String event_type;
 
     @Column(name = "location")
-    private String location;
+    private String event_location;
 
     @Column(name = "description")
-    private String description;
+    private String event_description;
 
     @Column(name="start_date")
-    private LocalDate start_date;
+    private String start_date;
 
     @Column(name="end_date")
-    private LocalDate end_date;
+    private String end_date;
 
     @Column(name = "grade_type")
     private String grade_type;
@@ -37,28 +39,32 @@ public class Reimbursement {
     @Column(name = "grade")
     private String grade;
 
-    @Column(name = "sup_approval")
+    @Column(name = "reimbursement_amount")
+    private Double amount;
+
+    @Column(name = "sup_approval", nullable = true)
     private boolean sup_approval;
 
-    @Column(name = "head_approval")
+    @Column(name = "head_approval", nullable = true)
     private boolean head_approval;
 
-    @Column(name = "benco_approval")
+    @Column(name = "benco_approval", nullable = true)
     private boolean benco_approval;
 
     public Reimbursement() {
     }
 
-    public Reimbursement(int id, Employee employee_id, String event_type, String location, String description, LocalDate start_date, LocalDate end_date, String grade_type, String grade, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+    public Reimbursement(int id, Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
         this.id = id;
-        this.employee_id = employee_id;
+        this.employee = employee;
         this.event_type = event_type;
-        this.location = location;
-        this.description = description;
+        this.event_location = event_location;
+        this.event_description = event_description;
         this.start_date = start_date;
         this.end_date = end_date;
         this.grade_type = grade_type;
         this.grade = grade;
+        this.amount = amount;
         this.sup_approval = sup_approval;
         this.head_approval = head_approval;
         this.benco_approval = benco_approval;
@@ -72,12 +78,12 @@ public class Reimbursement {
         this.id = id;
     }
 
-    public Employee getEmployee_id() {
-        return employee_id;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployee_id(Employee employee_id) {
-        this.employee_id = employee_id;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public String getEvent_type() {
@@ -88,35 +94,35 @@ public class Reimbursement {
         this.event_type = event_type;
     }
 
-    public String getLocation() {
-        return location;
+    public String getEvent_location() {
+        return event_location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setEvent_location(String event_location) {
+        this.event_location = event_location;
     }
 
-    public String getDescription() {
-        return description;
+    public String getEvent_description() {
+        return event_description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEvent_description(String event_description) {
+        this.event_description = event_description;
     }
 
-    public LocalDate getStart_date() {
+    public String getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(LocalDate start_date) {
+    public void setStart_date(String start_date) {
         this.start_date = start_date;
     }
 
-    public LocalDate getEnd_date() {
+    public String getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(LocalDate end_date) {
+    public void setEnd_date(String end_date) {
         this.end_date = end_date;
     }
 
@@ -134,6 +140,14 @@ public class Reimbursement {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public boolean isSup_approval() {
@@ -164,14 +178,15 @@ public class Reimbursement {
     public String toString() {
         return "Reimbursement{" +
                 "id=" + id +
-                ", employee_id=" + employee_id +
+                ", employee=" + employee +
                 ", event_type='" + event_type + '\'' +
-                ", location='" + location + '\'' +
-                ", description='" + description + '\'' +
+                ", event_location='" + event_location + '\'' +
+                ", event_description='" + event_description + '\'' +
                 ", start_date=" + start_date +
                 ", end_date=" + end_date +
                 ", grade_type='" + grade_type + '\'' +
                 ", grade='" + grade + '\'' +
+                ", amount=" + amount +
                 ", sup_approval=" + sup_approval +
                 ", head_approval=" + head_approval +
                 ", benco_approval=" + benco_approval +

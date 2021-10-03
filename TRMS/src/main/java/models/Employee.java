@@ -25,18 +25,18 @@ public class Employee {
 
     @OneToOne
     @JoinColumn(name = "dep_id")
-    private Employee dept_id;
+    private Department dept;
 
     public Employee() {
     }
 
-    public Employee(int employee_id, String first_name, String last_name, String sup_name, String head_name, Employee dept_id) {
+    public Employee(int employee_id, String first_name, String last_name, String sup_name, String head_name, Department dept) {
         this.employee_id = employee_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.sup_name = sup_name;
         this.head_name = head_name;
-        this.dept_id = dept_id;
+        this.dept = dept;
     }
 
     public int getEmployee_id() {
@@ -79,12 +79,12 @@ public class Employee {
         this.head_name = head_name;
     }
 
-    public Employee getDept_id() {
-        return dept_id;
+    public Department getDept() {
+        return dept;
     }
 
-    public void setDept_id(Employee dept_id) {
-        this.dept_id = dept_id;
+    public void setDept(Department dept) {
+        this.dept = dept;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class Employee {
                 ", last_name='" + last_name + '\'' +
                 ", sup_name='" + sup_name + '\'' +
                 ", head_name='" + head_name + '\'' +
-                ", dept_id=" + dept_id +
+                ", dept=" + dept +
                 '}';
     }
 }

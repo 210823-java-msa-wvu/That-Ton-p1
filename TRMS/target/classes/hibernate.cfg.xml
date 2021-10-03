@@ -20,6 +20,7 @@
         <mapping class="models.User"></mapping>
         <mapping class="models.Employee"></mapping>
         <mapping class="models.Reimbursement"></mapping>
+        <mapping class="models.Department"></mapping>
 
     </session-factory>
 </hibernate-configuration>

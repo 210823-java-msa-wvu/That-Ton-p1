@@ -1,6 +1,5 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import services.UserServices;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,8 +39,7 @@ public class LoginController implements FrontController {
             }
         }
         else {
-//            response.sendRedirect("static/failed.html");
-//            System.out.println("Wrong username or password!!!");
+            response.sendRedirect("static/failed.html");
 //            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid login credentials");
         }
     }
