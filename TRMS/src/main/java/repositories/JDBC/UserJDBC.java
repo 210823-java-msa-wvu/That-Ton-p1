@@ -1,6 +1,7 @@
-package repositories;
+package repositories.JDBC;
 
 import models.User;
+import repositories.UserRepo;
 import utils.ConnectionUtil;
 
 import javax.xml.transform.Result;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserJDBC implements UserRepo{
+public class UserJDBC implements UserRepo {
 
     ConnectionUtil cu = ConnectionUtil.getConnectionUtil();
 

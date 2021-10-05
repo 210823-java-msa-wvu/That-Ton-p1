@@ -37,20 +37,13 @@ public class RequestHandler {
     public FrontController handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // This is where the logic will go to parse the URI and send back the appropriate controller
-        StringBuilder uriString = new StringBuilder(request.getRequestURI()); // uri = /LibraryServlet/books/1
+        StringBuilder uriString = new StringBuilder(request.getRequestURI()); // uri = /TRMS/users/1
         System.out.println(uriString);
 
         // Remove context path
-        uriString.replace(0, request.getContextPath().length() + 1, ""); // now we have => books/1
+        uriString.replace(0, request.getContextPath().length() + 1, ""); // now we have => users/1
         System.out.println(uriString);
 
-        // check first if there is a '.' - aka are we trying to access a static resource
-//        if (uriString.indexOf(".") != -1) {
-//            request.setAttribute("static", uriString.toString());
-//            return (req, resp) -> {
-//               req.getRequestDispatcher("/static/books.html").forward(req, resp);
-//            };
-//        }
 
         if (uriString.indexOf("html") != -1) {
             request.setAttribute("static", uriString.toString());
@@ -59,7 +52,7 @@ public class RequestHandler {
 
         if (uriString.indexOf("/") != -1) {
             request.setAttribute("path", uriString.substring(uriString.indexOf("/") + 1)); // this will set the attribute 'path' to '1'
-            uriString.replace(uriString.indexOf("/"), uriString.length() +1, ""); // at this point uriString = 'books'
+            uriString.replace(uriString.indexOf("/"), uriString.length() +1, ""); // at this point uriString = 'users'
         }
 
         return controllerMap.get(uriString.toString());

@@ -1,4 +1,5 @@
-function addForm(){
+async function addForm(){
+    let url = 'http://localhost:8080/TRMS/reimbursements';
 
     let eventType_input = document.getElementById("eventType").value;
     let location_input = document.getElementById("location").value;
@@ -7,43 +8,38 @@ function addForm(){
     let end_time_input = document.getElementById("endTime").value;
     let gradingType_input = document.getElementById("gradingType").value;
     let grade_input = document.getElementById("grade").value;
-    let cost_input = document.getElementById("cost").value;
-
-
-    let xhttp = new XMLHttpRequest();
-    let url = `http://localhost:8080/TRMS/reimbursements`;
-
-    xhttp.open("POST", url, true);
-
-    xhttp.setRequestHeader('Content-type', 'application/json');
-
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-
-            console.log("Successful Call");
-
-        }
-    };
-
+    let cost_input = document.getElementById("cost").valueAsNumber;
 
     let newForm = {
-        "employee_id": 2,
-        "eventType" : eventType_input,
-        "location" : location_input,
-        "description" : description_input,
-        "start_time" : start_time_input,
-        "end_time" : end_time_input,
-        "gradingType" : gradingType_input,
-        "grade" : grade_input,
-        "cost" : cost_input
+        employee_id : 2,
+        event_type : eventType_input,
+        event_location : location_input,
+        event_description : description_input,
+        start_date : start_time_input,
+        end_date : end_time_input,
+        grade_type : gradingType_input,
+        grade : grade_input,
+        amount : cost_input,
+        sup_approval : false,
+        head_approval : false,
+        benco_approval : false
     }
+
     console.log(newForm);
 
-    //step 4
-    newForm = JSON.stringify(newForm);
-    xhttp.send(newForm);
-    alert("Request Sent!");
-    document.getElementById("evMessageBox").innerHTML = "Request Sent!";
+    let res = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(newForm),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    let resJson = await res.json()
+    .then((res) => {
+        console.log(res);
+    }).catch((error) => {
+        console.log(error);
+    });
 
 }
 
@@ -88,6 +84,17 @@ function getForm() {
 
     //step 4
     xhttp.send();
+
+}
+
+function getUserLoginCredentials() {
+    let userCredentials = returnUser();
+    console.log(userCredentials);
+}
+
+function userLogout(){
+    // Clear local storage
+    localStorage.removeItem("userLoginObj");
 
 }
 

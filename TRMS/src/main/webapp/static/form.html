@@ -42,12 +42,12 @@
     </style>
 
 </head>
-<body>
+<body onload="getUserLoginCredentials()">
     <div class="container">
 
         <div id="navBar">
             <span>
-                <a id = "indexLink" href = "index.html">Logout</a>
+                <a id = "indexLink" href = "index.html" onclick="userLogout()">Logout</a>
             </span>
         </div>
 
@@ -70,64 +70,64 @@
         </div>
 
         <div class="form-group row">
-            <label for="location" class="col-sm-2 col-form-label">Location</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="location" placeholder="City, State">
-            </div>
+          <label for="location" class="col-sm-2 col-form-label">Location</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="location" placeholder="City, State">
           </div>
+        </div>
     
-          <div class="form-group row">
-            <label for="description" class="col-sm-2 col-form-label">Description</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="description" placeholder="Description">
-            </div>
+        <div class="form-group row">
+          <label for="description" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="description" placeholder="Description">
           </div>
+        </div>
 
-          <div class="form-group row">
-            <label for="startTime" class="col-sm-2 col-form-label">Start Date</label>
-            <div class="col-sm-10">
-              <input type="date" class="form-control" id="startTime" placeholder="">
-            </div>
+        <div class="form-group row">
+          <label for="startTime" class="col-sm-2 col-form-label">Start Date</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="startTime" placeholder="MM/DD/YYYY">
           </div>
+        </div>
 
-          <div class="form-group row">
-            <label for="endTime" class="col-sm-2 col-form-label">End Date</label>
-            <div class="col-sm-10">
-              <input type="date" class="form-control" id="endTime" placeholder="">
-            </div>
+        <div class="form-group row">
+          <label for="endTime" class="col-sm-2 col-form-label">End Date</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="endTime" placeholder="MM/DD/YYYY">
           </div>
+        </div>
     
-          <div class="form-group row">
-            <label for="gradingType" class="col-sm-2 col-form-label">Grading Type</label>
-            <div class="col-sm-10">
-                <select class="custom-select my-1 mr-sm-2" id="gradingType">
-                    <option selected>Grading Type</option>
-                    <option value="Performance">Performance</option>
-                    <option value="Grade">Grade</option>
-                    <option value="Presentation">Presentation</option>
-                  </select>
-            </div>
+        <div class="form-group row">
+          <label for="gradingType" class="col-sm-2 col-form-label">Grading Type</label>
+          <div class="col-sm-10">
+              <select class="custom-select my-1 mr-sm-2" id="gradingType">
+                  <option selected>Grading Type</option>
+                  <option value="Performance">Performance</option>
+                  <option value="Grade">Grade</option>
+                  <option value="Presentation">Presentation</option>
+                </select>
           </div>
+        </div>
 
-          <div class="form-group row">
-            <label for="grade" class="col-sm-2 col-form-label">Grade</label>
-            <div class="col-sm-10">
-              <input type="number" class="form-control" id="grade" placeholder="Final grade">
-            </div>
+        <div class="form-group row">
+          <label for="grade" class="col-sm-2 col-form-label">Grade</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="grade" placeholder="Final grade">
           </div>
+        </div>
 
-          <div class="form-group row">
-            <label for="cost" class="col-sm-2 col-form-label">Tuition</label>
-            <div class="col-sm-10">
-              <input type="number" class="form-control" id="cost" placeholder="Tuition amount">
-            </div>
+        <div class="form-group row">
+          <label for="cost" class="col-sm-2 col-form-label">Tuition</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="cost" placeholder="Tuition amount">
           </div>
+        </div>
     
-          <div class="col-auto my-1">
+        <div class="col-auto my-1">
             <button id="submitBtn" onclick="addForm()" type="button" class="btn btn-primary">Submit</button>
-          </div>
+        </div>
 
-          <p id="evMessageBox"></p>
+        <p id="evMessageBox"></p>
 
     </fieldset>
 
@@ -184,5 +184,7 @@
     
 </body>
 
-<script src="js/form.js"></script>
+<script type="text/javascript" src="js/form.js"></script>
+<script type="text/javascript" src="./js/login.js"></script>
+
 </html>

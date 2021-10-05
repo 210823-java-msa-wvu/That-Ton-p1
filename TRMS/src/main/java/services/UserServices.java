@@ -1,7 +1,7 @@
 package services;
 
 import models.User;
-import repositories.UserJDBC;
+import repositories.JDBC.UserJDBC;
 import repositories.UserRepo;
 import repositories.hibernate.UserHibernate;
 

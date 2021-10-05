@@ -54,6 +54,21 @@ public class Reimbursement {
     public Reimbursement() {
     }
 
+    public Reimbursement(Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+        this.employee = employee;
+        this.event_type = event_type;
+        this.event_location = event_location;
+        this.event_description = event_description;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.grade_type = grade_type;
+        this.grade = grade;
+        this.amount = amount;
+        this.sup_approval = sup_approval;
+        this.head_approval = head_approval;
+        this.benco_approval = benco_approval;
+    }
+
     public Reimbursement(int id, Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
         this.id = id;
         this.employee = employee;
