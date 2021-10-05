@@ -23,7 +23,7 @@ public class ReimbursementJDBC implements ReimbursementRepo {
             String sql = "insert into reimbursements values (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning *";
 
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, reimbursement.getEmployee().getEmployee_id());
+            ps.setInt(1, reimbursement.getEmployeeId());
             ps.setString(2, reimbursement.getEvent_type());
             ps.setString(3, reimbursement.getEvent_location());
             ps.setString(4, reimbursement.getEvent_description());
@@ -57,8 +57,9 @@ public class ReimbursementJDBC implements ReimbursementRepo {
     public Reimbursement getById(Integer id) {
         try (Connection conn = cu.getConnection()) {
 
-            String sql = "select b.id, b.event_type, b.location, b.description, b.start_date, b.end_date, b.grade_type, b.grade, b.reimbursement_amount, b.sup_approval, b.head_approval, b.benco_approval, a.id as employee_id, a.first_name, a.last_name, a.supervisor_name, a.head_name, a.dep_id \n" +
-                    "from reimbursements b left join employees a on b.employee_id = a.id where b.id = ?";
+//            String sql = "select b.id, b.event_type, b.location, b.description, b.start_date, b.end_date, b.grade_type, b.grade, b.reimbursement_amount, b.sup_approval, b.head_approval, b.benco_approval, a.id as employee_id, a.first_name, a.last_name, a.supervisor_name, a.head_name, a.dep_id \n" +
+//                    "from reimbursements b left join employees a on b.employee_id = a.id where b.id = ?";
+            String sql = "select * from reimbursements where id = ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
@@ -67,12 +68,12 @@ public class ReimbursementJDBC implements ReimbursementRepo {
 
             if (rs.next()) {
                 Employee a = new Employee();
-                a.setEmployee_id(rs.getInt("employee_id"));
-                a.setFirst_name(rs.getString("first_name"));
-                a.setLast_name(rs.getString("last_name"));
-                a.setSup_name(rs.getString("supervisor_name"));
-                a.setHead_name(rs.getString("head_name"));
-                a.setDept_id(rs.getInt("dep_id"));
+//                a.setEmployee_id(rs.getInt("employee_id"));
+//                a.setFirst_name(rs.getString("first_name"));
+//                a.setLast_name(rs.getString("last_name"));
+//                a.setSup_name(rs.getString("supervisor_name"));
+//                a.setHead_name(rs.getString("head_name"));
+//                a.setDept_id(rs.getInt("dep_id"));
 
                 Reimbursement b = new Reimbursement();
                 b.setId(rs.getInt("id"));
@@ -87,7 +88,7 @@ public class ReimbursementJDBC implements ReimbursementRepo {
                 b.setSup_approval(rs.getBoolean("sup_approval"));
                 b.setHead_approval(rs.getBoolean("head_approval"));
                 b.setBenco_approval(rs.getBoolean("benco_approval"));
-                b.setEmployee(a);
+//                b.setEmployee(a);
 
                 return b;
             }
@@ -105,21 +106,21 @@ public class ReimbursementJDBC implements ReimbursementRepo {
         try (Connection conn = cu.getConnection()) {
 
             // we will need to use a join on books and authors to get all data needed
-            String sql = "select b.id, b.event_type, b.location, b.description, b.start_date, b.end_date, b.grade_type, b.grade, b.reimbursement_amount, b.sup_approval, b.head_approval, b.benco_approval, a.id as employee_id, a.first_name, a.last_name, a.supervisor_name, a.head_name, a.dep_id \n" +
-                    "from reimbursements b left join employees a on b.employee_id = a.id";
-
+//            String sql = "select b.id, b.event_type, b.location, b.description, b.start_date, b.end_date, b.grade_type, b.grade, b.reimbursement_amount, b.sup_approval, b.head_approval, b.benco_approval, a.id as employee_id, a.first_name, a.last_name, a.supervisor_name, a.head_name, a.dep_id \n" +
+//                    "from reimbursements b left join employees a on b.employee_id = a.id";
+            String sql = "select * from reimbursements";
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Employee a = new Employee();
-                a.setEmployee_id(rs.getInt("employee_id"));
-                a.setFirst_name(rs.getString("first_name"));
-                a.setLast_name(rs.getString("last_name"));
-                a.setSup_name(rs.getString("supervisor_name"));
-                a.setHead_name(rs.getString("head_name"));
-                a.setDept_id(rs.getInt("dep_id"));
+//                Employee a = new Employee();
+//                a.setEmployee_id(rs.getInt("employee_id"));
+//                a.setFirst_name(rs.getString("first_name"));
+//                a.setLast_name(rs.getString("last_name"));
+//                a.setSup_name(rs.getString("supervisor_name"));
+//                a.setHead_name(rs.getString("head_name"));
+//                a.setDept_id(rs.getInt("dep_id"));
 
                 Reimbursement b = new Reimbursement();
                 b.setId(rs.getInt("id"));
@@ -134,7 +135,7 @@ public class ReimbursementJDBC implements ReimbursementRepo {
                 b.setSup_approval(rs.getBoolean("sup_approval"));
                 b.setHead_approval(rs.getBoolean("head_approval"));
                 b.setBenco_approval(rs.getBoolean("benco_approval"));
-                b.setEmployee(a);
+//                b.setEmployee(a);
 
                 reimbursements.add(b);
             }

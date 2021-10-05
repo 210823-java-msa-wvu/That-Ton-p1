@@ -1,14 +1,20 @@
 async function getRequests() {
 
-    let url = 'http://localhost:8080/TRMS/reimbursements';
+    let xhttp = new XMLHttpRequest();
 
-    let res = await fetch(url)
-    let eventJson = await res.json()
+    xhttp.onreadystatechange = function () {
+        console.log("Current Ready State: " + this.readyState);
 
-        .then(eventJson => {
+        if (this.readyState == 4 && this.status == 200) {
+            //We have a successful and completed request and can now process the response.
+            console.log("Successful Call");
+
+            console.log(this.responseText);
+            let eventJson = JSON.parse(this.responseText);
+
             console.log(eventJson);
             document.getElementById("reimbursementid").innerHTML = eventJson.id;
-            document.getElementById("employeeName").innerHTML = eventJson.employee.first_name;
+            document.getElementById("employeeName").innerHTML = eventJson.employeeId;
             document.getElementById("eventTypeTable").innerHTML = eventJson.event_type;
             document.getElementById("locationTable").innerHTML = eventJson.event_location;
             document.getElementById("descriptionTable").innerHTML = eventJson.event_description;
@@ -20,7 +26,15 @@ async function getRequests() {
             document.getElementById("supApproval").innerHTML = eventJson.sup_approval;
             document.getElementById("headApproval").innerHTML = eventJson.head_approval;
             document.getElementById("bencoApproval").innerHTML = eventJson.benco_approval;
-        })
-        .catch(err => console.log(err));
+        }
+    }
+
+    let url = `http://localhost:8080/TRMS/reimbursements`
+
+    //step 3
+    xhttp.open("GET", url, true);
+
+    //step 4
+    xhttp.send();
 
 }

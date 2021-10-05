@@ -1,6 +1,8 @@
 async function addForm(){
     let url = 'http://localhost:8080/TRMS/reimbursements';
 
+    let userurl = 'http://localhost:8080/TRMS/users';
+
     let eventType_input = document.getElementById("eventType").value;
     let location_input = document.getElementById("location").value;
     let description_input = document.getElementById("description").value;
@@ -9,21 +11,29 @@ async function addForm(){
     let gradingType_input = document.getElementById("gradingType").value;
     let grade_input = document.getElementById("grade").value;
     let cost_input = document.getElementById("cost").valueAsNumber;
+    let newForm;
+    let userres = await fetch(userurl)
+    let userdata = await userres.json()
 
-    let newForm = {
-        employee_id : 2,
-        event_type : eventType_input,
-        event_location : location_input,
-        event_description : description_input,
-        start_date : start_time_input,
-        end_date : end_time_input,
-        grade_type : gradingType_input,
-        grade : grade_input,
-        amount : cost_input,
-        sup_approval : false,
-        head_approval : false,
-        benco_approval : false
-    }
+        .then(userdata => {
+                newForm = {
+                "employeeId" : userdata.employee_id,
+                "event_type" : eventType_input,
+                "event_location" : location_input,
+                "event_description" : description_input,
+                "start_date" : start_time_input,
+                "end_date" : end_time_input,
+                "grade_type" : gradingType_input,
+                "grade" : grade_input,
+                "amount" : cost_input,
+                "sup_approval" : false,
+                "head_approval" : false,
+                "benco_approval" : false
+            }
+        })
+        .catch(err => console.log(err));
+
+
 
     console.log(newForm);
 
@@ -34,16 +44,18 @@ async function addForm(){
             'Content-Type': 'application/json'
         }
     });
-    let resJson = await res.json()
-    .then((res) => {
-        console.log(res);
-    }).catch((error) => {
-        console.log(error);
-    });
+    // let resJson = await res.json()
+    // .then((res) => {
+    //     console.log(res);
+    // }).catch((error) => {
+    //     console.log(error);
+    // });
 
 }
 
 function getForm() {
+
+    let userurl = 'http://localhost:8080/TRMS/users';
 
     let xhttp = new XMLHttpRequest();
 
@@ -60,7 +72,7 @@ function getForm() {
             console.log(eventJson);
             //Inputting data into table
             document.getElementById("reimbursementid").innerHTML = eventJson.id;
-            document.getElementById("employeeName").innerHTML = eventJson.employee.first_name;
+            document.getElementById("employeeName").innerHTML = eventJson.employeeId;
             document.getElementById("eventTypeTable").innerHTML = eventJson.event_type;
             document.getElementById("locationTable").innerHTML = eventJson.event_location;
             document.getElementById("descriptionTable").innerHTML = eventJson.event_description;
@@ -87,14 +99,10 @@ function getForm() {
 
 }
 
-function getUserLoginCredentials() {
-    let userCredentials = returnUser();
-    console.log(userCredentials);
-}
 
-function userLogout(){
-    // Clear local storage
-    localStorage.removeItem("userLoginObj");
-
-}
+// function userLogout(){
+//     // Clear local storage
+//     localStorage.removeItem("userLoginObj");
+//
+// }
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ReimbursementServices {
 
-    ReimbursementRepo reimbursementRepo = new ReimbursementJDBC();
+    ReimbursementRepo reimbursementRepo = new ReimbursementHibernate();
 
     public Reimbursement getReimbursementById(Integer id) {return reimbursementRepo.getById(id);}
 

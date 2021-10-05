@@ -42,7 +42,7 @@
     </style>
 
 </head>
-<body onload="getUserLoginCredentials()">
+<body onload="getUser()">
     <div class="container">
 
         <div id="navBar">
@@ -52,7 +52,7 @@
         </div>
 
       <h1> Create New Reimbursement Form </h1>
-    <fieldset>
+        <form action="/TRMS/reimbursements" method="POST">
 
         <div class="form-group row">
             <label for="eventType" class="col-sm-2 col-form-label">Event Type</label>
@@ -129,7 +129,7 @@
 
         <p id="evMessageBox"></p>
 
-    </fieldset>
+        </form>
 
         <br><br>
         <hr>
@@ -146,7 +146,7 @@
                 <thead>
                   <tr>
                       <th scope="col">ID</th>
-                      <th scope="col">Employee Name</th>
+                      <th scope="col">Employee ID</th>
                       <th scope="col">Event Type</th>
                       <th scope="col">Location</th>
                       <th scope="col">Description</th>
@@ -181,10 +181,11 @@
           </fieldset>
 
     </div>
-    
+    <script type="text/javascript" src="js/form.js"></script>
+    <script type="text/javascript" src="./js/user.js"></script>
 </body>
 
-<script type="text/javascript" src="js/form.js"></script>
-<script type="text/javascript" src="./js/login.js"></script>
+
+
 
 </html>

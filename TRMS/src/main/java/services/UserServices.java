@@ -37,6 +37,10 @@ public class UserServices {
         return u.getTitle();
     }
 
+    public User getByUsername(String username) {
+        return userRepo.getByUsername(username);
+    }
+
     public List<User> getAllUsers() {
 
         return userRepo.getAll();

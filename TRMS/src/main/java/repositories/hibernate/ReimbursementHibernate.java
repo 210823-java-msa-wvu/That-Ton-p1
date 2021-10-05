@@ -16,20 +16,24 @@ public class ReimbursementHibernate implements ReimbursementRepo {
 
     @Override
     public Reimbursement add(Reimbursement rei) {
-        Session sess = HibernateUtil.getSession();
+        Session s = HibernateUtil.getSession();
+
+        // I'm going to use a try catch finally to make sure that our transaction only commits to the database
+        // so long as there are no exceptions thrown.
+
+        Transaction tx = null;
 
         try {
-            sess.beginTransaction();
-            rei.setId((int) sess.save(rei));
-            sess.getTransaction().commit();
+            tx = s.beginTransaction();
+            s.save(rei);
+            tx.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
-            sess.getTransaction().rollback();
-            rei = null;
+            if (tx != null)
+                tx.rollback();
         } finally {
-            sess.close();
+            s.close();
         }
-
         return rei;
     }
 

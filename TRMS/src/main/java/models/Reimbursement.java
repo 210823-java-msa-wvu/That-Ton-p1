@@ -11,12 +11,10 @@ public class Reimbursement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private int id;
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    @Column(name = "employee_id")
+    private Integer employeeId;
 
     @Column(name = "event_type")
     private String event_type;
@@ -42,20 +40,20 @@ public class Reimbursement {
     @Column(name = "reimbursement_amount")
     private Double amount;
 
-    @Column(name = "sup_approval", nullable = true)
+    @Column(name = "sup_approval")
     private boolean sup_approval;
 
-    @Column(name = "head_approval", nullable = true)
+    @Column(name = "head_approval")
     private boolean head_approval;
 
-    @Column(name = "benco_approval", nullable = true)
+    @Column(name = "benco_approval")
     private boolean benco_approval;
 
     public Reimbursement() {
     }
 
-    public Reimbursement(Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
-        this.employee = employee;
+    public Reimbursement(Integer employeeId, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+        this.employeeId = employeeId;
         this.event_type = event_type;
         this.event_location = event_location;
         this.event_description = event_description;
@@ -69,9 +67,9 @@ public class Reimbursement {
         this.benco_approval = benco_approval;
     }
 
-    public Reimbursement(int id, Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+    public Reimbursement(int id, Integer employeeId, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
         this.id = id;
-        this.employee = employee;
+        this.employeeId = employeeId;
         this.event_type = event_type;
         this.event_location = event_location;
         this.event_description = event_description;
@@ -93,12 +91,12 @@ public class Reimbursement {
         this.id = id;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Integer getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getEvent_type() {
@@ -193,12 +191,12 @@ public class Reimbursement {
     public String toString() {
         return "Reimbursement{" +
                 "id=" + id +
-                ", employee=" + employee +
+                ", employeeId=" + employeeId +
                 ", event_type='" + event_type + '\'' +
                 ", event_location='" + event_location + '\'' +
                 ", event_description='" + event_description + '\'' +
-                ", start_date=" + start_date +
-                ", end_date=" + end_date +
+                ", start_date='" + start_date + '\'' +
+                ", end_date='" + end_date + '\'' +
                 ", grade_type='" + grade_type + '\'' +
                 ", grade='" + grade + '\'' +
                 ", amount=" + amount +

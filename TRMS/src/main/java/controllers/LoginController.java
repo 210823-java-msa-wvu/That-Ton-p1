@@ -7,12 +7,14 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LoginController implements FrontController {
 
     private Logger log = LogManager.getLogger(LoginController.class);
     private UserServices userServices = new UserServices();
+    HttpSession session = null;
 
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -21,6 +23,8 @@ public class LoginController implements FrontController {
         String password = request.getParameter("password");
         System.out.println("Username: " + username + " Password: " + password);
         if (userServices.login(username, password)) {
+            session = request.getSession();
+            session.setAttribute("username", username);
             if (userServices.checkTitle(username).equals("Employee") == true) {
                 response.sendRedirect("static/form.html");
                 System.out.println("Login successfully, welcome " + username + "!!!");

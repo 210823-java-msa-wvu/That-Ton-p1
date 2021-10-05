@@ -6,6 +6,7 @@ import services.UserServices;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class UserController implements FrontController {
@@ -14,6 +15,15 @@ public class UserController implements FrontController {
 
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.getWriter().write(om.writeValueAsString(userServices.getAllUsers()));
+        HttpSession session = request.getSession();
+        if(session != null && session.getAttribute("username") != null){
+            String username = (String) session.getAttribute("username");
+            System.out.println(userServices.getByUsername(username));
+            response.getWriter().write(om.writeValueAsString(userServices.getByUsername(username)));
+        } else {
+            assert false;
+            session.invalidate();
+            response.sendRedirect("static/index.html");
+        }
     }
 }

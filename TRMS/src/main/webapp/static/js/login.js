@@ -1,4 +1,4 @@
-let userLoginObj;
+// let userLoginObj;
 
 async function login() {
 
@@ -29,6 +29,7 @@ async function login() {
     //     });
 }
 
-function returnUser() {
-    return localStorage.getItem("userLoginObj");
-}
+// function returnUser() {
+//     return localStorage.getItem("userLoginObj");
+// }
+
