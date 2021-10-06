@@ -17,7 +17,7 @@ async function addForm(){
 
         .then(userdata => {
                 newForm = {
-                "employeeId" : userdata.employee_id,
+                "employee_id" : userdata.employee_id,
                 "event_type" : eventType_input,
                 "event_location" : location_input,
                 "event_description" : description_input,
@@ -33,8 +33,6 @@ async function addForm(){
         })
         .catch(err => console.log(err));
 
-
-
     console.log(newForm);
 
     let res = await fetch(url, {
@@ -44,65 +42,116 @@ async function addForm(){
             'Content-Type': 'application/json'
         }
     });
-    // let resJson = await res.json()
-    // .then((res) => {
-    //     console.log(res);
-    // }).catch((error) => {
-    //     console.log(error);
-    // });
-
 }
 
-function getForm() {
+// function getForm() {
+//
+//     let userurl = 'http://localhost:8080/TRMS/users';
+//
+//     let xhttp = new XMLHttpRequest();
+//
+//     xhttp.onreadystatechange = function () {
+//         console.log("Current Ready State: " + this.readyState);
+//
+//         if (this.readyState == 4 && this.status == 200) {
+//             //We have a successful and completed request and can now process the response.
+//             console.log("Successful Call");
+//
+//             console.log(this.responseText);
+//             let eventJson = JSON.parse(this.responseText);
+//
+//             console.log(eventJson);
+//             //Inputting data into table
+//             document.getElementById("reimbursementid").innerHTML = eventJson.id;
+//             document.getElementById("employeeId").innerHTML = eventJson.employee_id;
+//             document.getElementById("eventTypeTable").innerHTML = eventJson.event_type;
+//             document.getElementById("locationTable").innerHTML = eventJson.event_location;
+//             document.getElementById("descriptionTable").innerHTML = eventJson.event_description;
+//             document.getElementById("startDate").innerHTML = eventJson.start_date;
+//             document.getElementById("endDate").innerHTML = eventJson.end_date;
+//             document.getElementById("gradeType").innerHTML = eventJson.grade_type;
+//             document.getElementById("gradeTable").innerHTML = eventJson.grade;
+//             document.getElementById("reimbursementAmount").innerHTML = "$" + eventJson.amount;
+//             document.getElementById("supApproval").innerHTML = eventJson.sup_approval;
+//             document.getElementById("headApproval").innerHTML = eventJson.head_approval;
+//             document.getElementById("bencoApproval").innerHTML = eventJson.benco_approval;
+//         }
+//     }
+//
+//     let eventId = document.getElementById("EventIdInput").value;
+//
+//     let url = `http://localhost:8080/TRMS/reimbursements/` + eventId;
+//
+//     //step 3
+//     xhttp.open("GET", url, true);
+//
+//     //step 4
+//     xhttp.send();
+//
+// }
+
+async function getEmployeeRequests() {
+    let url = 'http://localhost:8080/TRMS/reimbursements/';
 
     let userurl = 'http://localhost:8080/TRMS/users';
 
-    let xhttp = new XMLHttpRequest();
+    let eid, un;
+    let userres = await fetch(userurl)
+    let userdata = await userres.json()
 
-    xhttp.onreadystatechange = function () {
-        console.log("Current Ready State: " + this.readyState);
+        .then(userdata => {
+            eid = userdata.employee_id;
+            un = userdata.username;
+        })
+        .catch(err => console.log(err));
 
-        if (this.readyState == 4 && this.status == 200) {
-            //We have a successful and completed request and can now process the response.
-            console.log("Successful Call");
+    console.log("Get all reimbursement requests from username " + un);
 
-            console.log(this.responseText);
-            let eventJson = JSON.parse(this.responseText);
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 & this.status == 200) {
+            // console.log(this.response)
+            let requests = JSON.parse(this.responseText)
+            console.log(requests);
 
-            console.log(eventJson);
-            //Inputting data into table
-            document.getElementById("reimbursementid").innerHTML = eventJson.id;
-            document.getElementById("employeeName").innerHTML = eventJson.employeeId;
-            document.getElementById("eventTypeTable").innerHTML = eventJson.event_type;
-            document.getElementById("locationTable").innerHTML = eventJson.event_location;
-            document.getElementById("descriptionTable").innerHTML = eventJson.event_description;
-            document.getElementById("startDate").innerHTML = eventJson.start_date;
-            document.getElementById("endDate").innerHTML = eventJson.end_date;
-            document.getElementById("gradeType").innerHTML = eventJson.grade_type;
-            document.getElementById("gradeTable").innerHTML = eventJson.grade;
-            document.getElementById("reimbursementAmount").innerHTML = eventJson.amount;
-            document.getElementById("supApproval").innerHTML = eventJson.sup_approval;
-            document.getElementById("headApproval").innerHTML = eventJson.head_approval;
-            document.getElementById("bencoApproval").innerHTML = eventJson.benco_approval;
+            if (this.responseText == "[]" || this.responseText == "{}") {
+                document.getElementById("success").innerHTML = "No Requests to list"
+
+            }
+
+            const tableRow = document.getElementById("tableRow")
+            tableRow.innerHTML = "";
+            let count = 1;
+            requests.forEach(res => {
+
+                const content = `
+                    <tr>
+                        <th scope="row">${count}</th>
+                        <td>${res.employee_id}</td>
+                        <td>${res.event_type}</td>
+                        <td>${res.event_location}</td>
+                        <td>${res.event_description}</td>
+                        <td>${res.start_date}</td>
+                        <td>${res.end_date}</td>
+                        <td>${res.grade_type}</td>
+                        <td>${res.grade}</td>
+                        <td>${"$"+res.amount}</td>
+                        <td>${res.sup_approval}</td>
+                        <td>${res.head_approval}</td>
+                        <td>${res.benco_approval}</td>
+                    </tr>
+
+                `
+                tableRow.innerHTML += content;
+                count += 1;
+            })
         }
-    }
+    };
 
-    let eventId = document.getElementById("EventIdInput").value;
-
-    let url = `http://localhost:8080/TRMS/reimbursements/` + eventId;
-
-    //step 3
-    xhttp.open("GET", url, true);
-
-    //step 4
-    xhttp.send();
+    xhr.open("GET", url + eid, true);
+    xhr.send();
 
 }
 
 
-// function userLogout(){
-//     // Clear local storage
-//     localStorage.removeItem("userLoginObj");
-//
-// }
 

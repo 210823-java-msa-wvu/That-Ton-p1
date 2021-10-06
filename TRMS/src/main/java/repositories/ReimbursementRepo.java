@@ -1,7 +1,6 @@
 package repositories;
 
 import models.Reimbursement;
-import models.User;
 
 import java.util.List;
 

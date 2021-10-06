@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +15,7 @@ public class Reimbursement {
     private Integer id;
 
     @Column(name = "employee_id")
-    private Integer employeeId;
+    private Integer employee_id;
 
     @Column(name = "event_type")
     private String event_type;
@@ -52,8 +53,8 @@ public class Reimbursement {
     public Reimbursement() {
     }
 
-    public Reimbursement(Integer employeeId, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
-        this.employeeId = employeeId;
+    public Reimbursement(Integer employee_id, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+        this.employee_id = employee_id;
         this.event_type = event_type;
         this.event_location = event_location;
         this.event_description = event_description;
@@ -67,9 +68,9 @@ public class Reimbursement {
         this.benco_approval = benco_approval;
     }
 
-    public Reimbursement(int id, Integer employeeId, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+    public Reimbursement(Integer id, Integer employee_id, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
         this.id = id;
-        this.employeeId = employeeId;
+        this.employee_id = employee_id;
         this.event_type = event_type;
         this.event_location = event_location;
         this.event_description = event_description;
@@ -83,20 +84,20 @@ public class Reimbursement {
         this.benco_approval = benco_approval;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Integer getEmployeeId() {
-        return employeeId;
+    public Integer getEmployee_id() {
+        return employee_id;
     }
 
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee_id(Integer employee_id) {
+        this.employee_id = employee_id;
     }
 
     public String getEvent_type() {
@@ -191,7 +192,7 @@ public class Reimbursement {
     public String toString() {
         return "Reimbursement{" +
                 "id=" + id +
-                ", employeeId=" + employeeId +
+                ", employee_id=" + employee_id +
                 ", event_type='" + event_type + '\'' +
                 ", event_location='" + event_location + '\'' +
                 ", event_description='" + event_description + '\'' +

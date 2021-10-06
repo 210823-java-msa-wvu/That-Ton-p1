@@ -137,10 +137,10 @@
         <!-- Check my request -->
         <fieldset>
             <h2> My Reimbursement Request </h2>
-            <div class="input-group mb-3">
-              <input id = "EventIdInput" type="number" class="form-control" placeholder="Reimbursement ID" aria-label="EventID" aria-describedby="basic-addon1">
-            </div>
-            <button id="getReimbursementButton" onclick="getForm()" type="button" class="btn btn-primary">Get</button>
+<!--            <div class="input-group mb-3">-->
+<!--              <input id = "EventIdInput" type="number" class="form-control" placeholder="Reimbursement ID" aria-label="EventID" aria-describedby="basic-addon1">-->
+<!--            </div>-->
+            <button id="getReimbursementButton" onclick="getEmployeeRequests()" type="button" class="btn btn-primary">Get</button>
   
             <table class="table table-light table-striped">
                 <thead>
@@ -160,22 +160,22 @@
                       <th scope="col">BenCo Approval</th>
                   </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td id="reimbursementid"></th>
-                        <td id="employeeName"></td>
-                        <td id="eventTypeTable"></td>
-                        <td id="locationTable"></td>
-                        <td id="descriptionTable"></td>
-                        <td id="startDate"></td>
-                        <td id="endDate"></td>
-                        <td id="gradeType"></td>
-                        <td id="gradeTable"></td>
-                        <td id="reimbursementAmount"></td>
-                        <td id="supApproval"></td>
-                        <td id="headApproval"></td>
-                        <td id="bencoApproval"></td>
-                    </tr>
+                <tbody id="tableRow">
+<!--                    <tr>-->
+<!--                        <td id="reimbursementid"></th>-->
+<!--                        <td id="employeeId"></td>-->
+<!--                        <td id="eventTypeTable"></td>-->
+<!--                        <td id="locationTable"></td>-->
+<!--                        <td id="descriptionTable"></td>-->
+<!--                        <td id="startDate"></td>-->
+<!--                        <td id="endDate"></td>-->
+<!--                        <td id="gradeType"></td>-->
+<!--                        <td id="gradeTable"></td>-->
+<!--                        <td id="reimbursementAmount"></td>-->
+<!--                        <td id="supApproval"></td>-->
+<!--                        <td id="headApproval"></td>-->
+<!--                        <td id="bencoApproval"></td>-->
+<!--                    </tr>-->
                 </tbody>
             </table>
           </fieldset>

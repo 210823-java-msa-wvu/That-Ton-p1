@@ -3,11 +3,11 @@ package services;
 import models.Employee;
 import models.Reimbursement;
 import repositories.EmployeeRepo;
-import repositories.JDBC.ReimbursementJDBC;
 import repositories.ReimbursementRepo;
 import repositories.hibernate.EmployeeHibernate;
 import repositories.hibernate.ReimbursementHibernate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReimbursementServices {
@@ -15,6 +15,18 @@ public class ReimbursementServices {
     ReimbursementRepo reimbursementRepo = new ReimbursementHibernate();
 
     public Reimbursement getReimbursementById(Integer id) {return reimbursementRepo.getById(id);}
+
+    public List<Reimbursement> getAllRequestsByEmployeeId(int eid) {
+        List<Reimbursement> requests = reimbursementRepo.getAll();
+        List<Reimbursement> result = new ArrayList<Reimbursement>();
+
+        for(Reimbursement r : requests) {
+            if(r.getEmployee_id() == eid) {
+                result.add(r);
+            }
+        }
+        return result;
+    }
 
     public List<Reimbursement> getAllReimbursements() {
         return reimbursementRepo.getAll();

@@ -48,14 +48,9 @@ public class ReimbursementController implements FrontController{
             Reimbursement b = null;
 
             switch (request.getMethod()) {
-                // /books/1
+                // /reimbursements/1
                 case "GET": {
-                    b = reimbursementServices.getReimbursementById(reimbursementId);
-                    if (b != null) {
-                        response.getWriter().write(om.writeValueAsString(b));
-                    } else {
-                        response.sendError(404, "Reimbursement not found");
-                    }
+                    response.getWriter().write(om.writeValueAsString(reimbursementServices.getAllRequestsByEmployeeId(reimbursementId)));
                     break;
                 }
 
