@@ -21,7 +21,7 @@ public class ReimbursementServices {
         List<Reimbursement> result = new ArrayList<Reimbursement>();
 
         for(Reimbursement r : requests) {
-            if(r.getEmployee_id() == eid) {
+            if(r.getEmployee().getEmployee_id() == eid) {
                 result.add(r);
             }
         }

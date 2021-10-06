@@ -14,8 +14,9 @@ public class Reimbursement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "employee_id")
-    private Integer employee_id;
+    @OneToOne
+    @JoinColumn (name = "employee_id")
+    private Employee employee;
 
     @Column(name = "event_type")
     private String event_type;
@@ -53,8 +54,8 @@ public class Reimbursement {
     public Reimbursement() {
     }
 
-    public Reimbursement(Integer employee_id, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
-        this.employee_id = employee_id;
+    public Reimbursement(Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+        this.employee = employee;
         this.event_type = event_type;
         this.event_location = event_location;
         this.event_description = event_description;
@@ -68,9 +69,9 @@ public class Reimbursement {
         this.benco_approval = benco_approval;
     }
 
-    public Reimbursement(Integer id, Integer employee_id, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+    public Reimbursement(Integer id, Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
         this.id = id;
-        this.employee_id = employee_id;
+        this.employee = employee;
         this.event_type = event_type;
         this.event_location = event_location;
         this.event_description = event_description;
@@ -92,12 +93,12 @@ public class Reimbursement {
         this.id = id;
     }
 
-    public Integer getEmployee_id() {
-        return employee_id;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployee_id(Integer employee_id) {
-        this.employee_id = employee_id;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public String getEvent_type() {
@@ -192,7 +193,7 @@ public class Reimbursement {
     public String toString() {
         return "Reimbursement{" +
                 "id=" + id +
-                ", employee_id=" + employee_id +
+                ", employee=" + employee +
                 ", event_type='" + event_type + '\'' +
                 ", event_location='" + event_location + '\'' +
                 ", event_description='" + event_description + '\'' +

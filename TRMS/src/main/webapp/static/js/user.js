@@ -13,6 +13,7 @@ async function getUser() {
 }
 
 function populateData(data) {
-    let employeeId = document.getElementById('');
-    employeeId.value = data.employee_id;
+    let employeeName = document.getElementById("employee_name");
+    employeeName.innerHTML = "Welcome " + data.employee.first_name + " " + data.employee.last_name;
 }
+// document.getElementById("bencoApproval").innerHTML = eventJson.benco_approval;

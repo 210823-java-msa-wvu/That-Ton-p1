@@ -17,7 +17,7 @@ async function addForm(){
 
         .then(userdata => {
                 newForm = {
-                "employee_id" : userdata.employee_id,
+                "employee" : {"employee_id" : userdata.employee_id},
                 "event_type" : eventType_input,
                 "event_location" : location_input,
                 "event_description" : description_input,
@@ -127,7 +127,7 @@ async function getEmployeeRequests() {
                 const content = `
                     <tr>
                         <th scope="row">${count}</th>
-                        <td>${res.employee_id}</td>
+                        <td>${res.employee.first_name + " " + res.employee.last_name}</td>
                         <td>${res.event_type}</td>
                         <td>${res.event_location}</td>
                         <td>${res.event_description}</td>
@@ -150,8 +150,21 @@ async function getEmployeeRequests() {
 
     xhr.open("GET", url + eid, true);
     xhr.send();
+}
+
+async function populateUsername() {
+    let url = 'http://localhost:8080/TRMS/users';
+
+    let res = await fetch(url)
+    let data = await res.json()
+
+        .then(data => {
+            document.getElementById("employee_name").innerHTML = "Welcome " + data.username + "!!!";
+        })
+        .catch(err => console.log(err));
 
 }
 
+populateUsername();
 
 
