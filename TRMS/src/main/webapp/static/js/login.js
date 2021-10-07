@@ -11,7 +11,6 @@ async function login() {
     console.log(user);
 
     localStorage.setItem("userLoginObj", JSON.stringify(user));
-    localStorage.setItem("username", JSON.stringify(document.getElementById('username').value));
 
     let res = await fetch(url, {
         method: "POST",

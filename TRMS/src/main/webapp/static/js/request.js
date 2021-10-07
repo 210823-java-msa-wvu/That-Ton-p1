@@ -1,4 +1,8 @@
-async function getRequests() {
+document.getElementById("employee_name").innerHTML = "Welcome " + localStorage.getItem("username") + "!!!";
+
+getRequests()
+
+function getRequests() {
 
     let xhttp = new XMLHttpRequest();
 
@@ -7,25 +11,33 @@ async function getRequests() {
 
         if (this.readyState == 4 && this.status == 200) {
             //We have a successful and completed request and can now process the response.
-            console.log("Successful Call");
+            let requests = JSON.parse(this.responseText)
+            console.log(requests);
 
-            console.log(this.responseText);
-            let eventJson = JSON.parse(this.responseText);
+            const tableRow = document.getElementById("tableRow")
+            tableRow.innerHTML = "";
+            requests.forEach(res => {
 
-            console.log(eventJson);
-            document.getElementById("reimbursementid").innerHTML = eventJson.id;
-            document.getElementById("employeeName").innerHTML = eventJson.employeeId;
-            document.getElementById("eventTypeTable").innerHTML = eventJson.event_type;
-            document.getElementById("locationTable").innerHTML = eventJson.event_location;
-            document.getElementById("descriptionTable").innerHTML = eventJson.event_description;
-            document.getElementById("startDate").innerHTML = eventJson.start_date;
-            document.getElementById("endDate").innerHTML = eventJson.end_date;
-            document.getElementById("gradeType").innerHTML = eventJson.grade_type;
-            document.getElementById("gradeTable").innerHTML = eventJson.grade;
-            document.getElementById("reimbursementAmount").innerHTML = eventJson.amount;
-            document.getElementById("supApproval").innerHTML = eventJson.sup_approval;
-            document.getElementById("headApproval").innerHTML = eventJson.head_approval;
-            document.getElementById("bencoApproval").innerHTML = eventJson.benco_approval;
+                const content = `
+                    <tr>
+                        <td>${res.id}</td>
+                        <td>${res.employee.first_name + " " + res.employee.last_name}</td>
+                        <td>${res.event_type}</td>
+                        <td>${res.event_location}</td>
+                        <td>${res.event_description}</td>
+                        <td>${res.start_date}</td>
+                        <td>${res.end_date}</td>
+                        <td>${res.grade_type}</td>
+                        <td>${res.grade}</td>
+                        <td>${"$"+res.amount}</td>
+                        <td>${res.sup_approval}</td>
+                        <td>${res.head_approval}</td>
+                        <td>${res.benco_approval}</td>
+                    </tr>
+
+                `
+                tableRow.innerHTML += content;
+            })
         }
     }
 
@@ -37,4 +49,12 @@ async function getRequests() {
     //step 4
     xhttp.send();
 
+}
+
+function userLogout(){
+    // Clear local storage
+    localStorage.removeItem("username");
+    localStorage.removeItem("userLoginObj");
+    localStorage.removeItem("title");
+    localStorage.removeItem("employeeID");
 }

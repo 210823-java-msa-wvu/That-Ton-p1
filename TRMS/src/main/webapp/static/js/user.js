@@ -7,13 +7,15 @@ async function getUser() {
         .then(data => {
             console.log(data);
             // populateData(data);
+            localStorage.setItem("employeeID", JSON.stringify(data.employee_id));
+            localStorage.setItem("username", JSON.stringify(data.username));
+            localStorage.setItem("title", JSON.stringify(data.title));
         })
         .catch(err => console.log(err));
 
 }
 
-function populateData(data) {
-    let employeeName = document.getElementById("employee_name");
-    employeeName.innerHTML = "Welcome " + data.employee.first_name + " " + data.employee.last_name;
-}
+// function populateData(data) {
+//
+// }
 // document.getElementById("bencoApproval").innerHTML = eventJson.benco_approval;
