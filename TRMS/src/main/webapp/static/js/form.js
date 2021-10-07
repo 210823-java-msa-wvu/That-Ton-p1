@@ -11,6 +11,23 @@ async function addForm(){
     let gradingType_input = document.getElementById("gradingType").value;
     let grade_input = document.getElementById("grade").value;
     let cost_input = document.getElementById("cost").valueAsNumber;
+
+    if(eventType_input == "UniversityCourses")
+        cost_input = cost_input * 0.8;
+    else if (eventType_input == "Seminars")
+        cost_input = cost_input * 0.6;
+    else if (eventType_input == "CertificationPrep")
+        cost_input = cost_input * 0.75;
+    else if (eventType_input == "Certification")
+        cost_input = cost_input;
+    else if (eventType_input == "TechnicalTraining")
+        cost_input = cost_input * 0.9;
+    else
+        cost_input = cost_input * 0.3;
+
+    if (cost_input > 1000)
+        cost_input = 1000;
+
     let newForm;
     let userres = await fetch(userurl)
     let userdata = await userres.json()
@@ -152,19 +169,19 @@ async function getEmployeeRequests() {
     xhr.send();
 }
 
-async function populateUsername() {
-    let url = 'http://localhost:8080/TRMS/users';
+// async function populateUsername() {
+//     let url = 'http://localhost:8080/TRMS/users';
+//
+//     let res = await fetch(url)
+//     let data = await res.json()
+//
+//         .then(data => {
+//             document.getElementById("employee_name").innerHTML = "Welcome " + data.username + "!!!";
+//         })
+//         .catch(err => console.log(err));
+//
+// }
+//
+// populateUsername();
 
-    let res = await fetch(url)
-    let data = await res.json()
-
-        .then(data => {
-            document.getElementById("employee_name").innerHTML = "Welcome " + data.username + "!!!";
-        })
-        .catch(err => console.log(err));
-
-}
-
-populateUsername();
-
-
+document.getElementById("employee_name").innerHTML = "Welcome " + localStorage.getItem("username") + "!!!";
