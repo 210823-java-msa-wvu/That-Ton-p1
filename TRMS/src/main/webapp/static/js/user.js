@@ -8,7 +8,6 @@ async function getUser() {
             console.log(data);
             // populateData(data);
             localStorage.setItem("employeeID", JSON.stringify(data.employee_id));
-            localStorage.setItem("username", JSON.stringify(data.username));
             localStorage.setItem("title", JSON.stringify(data.title));
         })
         .catch(err => console.log(err));

@@ -52,10 +52,15 @@ async function addForm(){
             'Content-Type': 'application/json'
         }
     });
+
+    document.getElementById("evMessageBox").innerHTML = "Successfully submitted!";
+
 }
 
 function getEmployeeRequests() {
     let url = 'http://localhost:8080/TRMS/reimbursements/';
+
+    document.getElementById("evMessageBox").innerHTML = "";
 
     let eid = localStorage.getItem("employeeID");
     let un = localStorage.getItem("username");
