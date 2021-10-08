@@ -38,9 +38,9 @@ async function addForm(){
         "grade_type": gradingType_input,
         "grade": grade_input,
         "amount": cost_input,
-        "sup_approval": false,
-        "head_approval": false,
-        "benco_approval": false
+        "sup_approval": "",
+        "head_approval": "",
+        "benco_approval": ""
     }
 
     console.log(newForm);
@@ -86,7 +86,7 @@ function getEmployeeRequests() {
 
                 const content = `
                     <tr>
-                        <th scope="row">${count}</th>
+                        <th scope="row">${res.id}</th>
                         <td>${res.employee.first_name + " " + res.employee.last_name}</td>
                         <td>${res.event_type}</td>
                         <td>${res.event_location}</td>

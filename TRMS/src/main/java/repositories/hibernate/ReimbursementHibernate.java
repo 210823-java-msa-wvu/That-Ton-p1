@@ -57,7 +57,7 @@ public class ReimbursementHibernate implements ReimbursementRepo {
     public List<Reimbursement> getAll() {
         Session s = HibernateUtil.getSession();
         //Create a query object
-        String query = "from Reimbursement "; //this is HQL (Not Native SQL)
+        String query = "from Reimbursement order by id"; //this is HQL (Not Native SQL)
         Query<Reimbursement> q = s.createQuery(query, Reimbursement.class);
         List<Reimbursement> reimbursements = q.getResultList();
         s.close();

@@ -43,18 +43,35 @@ public class Reimbursement {
     private Double amount;
 
     @Column(name = "sup_approval")
-    private boolean sup_approval;
+    private String sup_approval;
 
     @Column(name = "head_approval")
-    private boolean head_approval;
+    private String head_approval;
 
     @Column(name = "benco_approval")
-    private boolean benco_approval;
+    private String benco_approval;
 
     public Reimbursement() {
     }
 
-    public Reimbursement(Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+    public Reimbursement(Integer id, String sup_approval) {
+        this.id = id;
+        this.sup_approval = sup_approval;
+    }
+
+    public Reimbursement(Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount) {
+        this.employee = employee;
+        this.event_type = event_type;
+        this.event_location = event_location;
+        this.event_description = event_description;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.grade_type = grade_type;
+        this.grade = grade;
+        this.amount = amount;
+    }
+
+    public Reimbursement(Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, String sup_approval, String head_approval, String benco_approval) {
         this.employee = employee;
         this.event_type = event_type;
         this.event_location = event_location;
@@ -69,7 +86,7 @@ public class Reimbursement {
         this.benco_approval = benco_approval;
     }
 
-    public Reimbursement(Integer id, Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, boolean sup_approval, boolean head_approval, boolean benco_approval) {
+    public Reimbursement(Integer id, Employee employee, String event_type, String event_location, String event_description, String start_date, String end_date, String grade_type, String grade, Double amount, String sup_approval, String head_approval, String benco_approval) {
         this.id = id;
         this.employee = employee;
         this.event_type = event_type;
@@ -165,27 +182,27 @@ public class Reimbursement {
         this.amount = amount;
     }
 
-    public boolean isSup_approval() {
+    public String getSup_approval() {
         return sup_approval;
     }
 
-    public void setSup_approval(boolean sup_approval) {
+    public void setSup_approval(String sup_approval) {
         this.sup_approval = sup_approval;
     }
 
-    public boolean isHead_approval() {
+    public String getHead_approval() {
         return head_approval;
     }
 
-    public void setHead_approval(boolean head_approval) {
+    public void setHead_approval(String head_approval) {
         this.head_approval = head_approval;
     }
 
-    public boolean isBenco_approval() {
+    public String getBenco_approval() {
         return benco_approval;
     }
 
-    public void setBenco_approval(boolean benco_approval) {
+    public void setBenco_approval(String benco_approval) {
         this.benco_approval = benco_approval;
     }
 
@@ -202,9 +219,9 @@ public class Reimbursement {
                 ", grade_type='" + grade_type + '\'' +
                 ", grade='" + grade + '\'' +
                 ", amount=" + amount +
-                ", sup_approval=" + sup_approval +
-                ", head_approval=" + head_approval +
-                ", benco_approval=" + benco_approval +
+                ", sup_approval='" + sup_approval + '\'' +
+                ", head_approval='" + head_approval + '\'' +
+                ", benco_approval='" + benco_approval + '\'' +
                 '}';
     }
 }

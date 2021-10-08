@@ -34,7 +34,7 @@
             padding: 10px;
         }
 
-        #submitBtn, #getReimbursementButton {
+        #submitBtn {
             background-color: black;
             border-color: black;
         }
@@ -54,8 +54,6 @@
         <h1> Reimbursement Request Lists </h1>
 
         <fieldset>
-
-            <button id="getReimbursementButton" onclick="getRequests()" type="button" class="btn btn-primary">Get</button>
   
             <table class="table table-light table-striped">
                 <thead>
@@ -89,9 +87,9 @@
     <form action="/TRMS/reimbursements" method="POST">
 
         <div class="form-group row">
-            <label for="eventType" class="col-sm-2 col-form-label">Reimbursement ID</label>
+            <label for="re_id" class="col-sm-2 col-form-label">Reimbursement ID</label>
             <div class="col-sm-10">
-                <select class="custom-select my-1 mr-sm-2" id="eventType">
+                <select class="custom-select my-1 mr-sm-2" id="re_id">
 
                 </select>
             </div>
@@ -101,16 +99,14 @@
             <label for="decision" class="col-sm-2 col-form-label">Decision</label>
             <div class="col-sm-10">
                 <select class="custom-select my-1 mr-sm-2" id="decision">
-                    <option selected>Approve / Reject</option>
-                    <option value="approve">Approve</option>
-                    <option value="reject">Reject</option>
+                    <option value="Approve">Approve</option>
+                    <option value="Reject">Reject</option>
                 </select>
             </div>
         </div>
 
-
         <div class="col-auto my-1">
-            <button id="submitBtn" onclick="addForm()" type="button" class="btn btn-primary">Submit</button>
+            <button id="submitBtn" onclick="makeDecision()" type="button" class="btn btn-primary">Submit</button>
         </div>
 
         <p id="evMessageBox"></p>
