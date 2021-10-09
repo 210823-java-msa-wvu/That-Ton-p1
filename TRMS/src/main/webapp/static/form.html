@@ -17,12 +17,8 @@
         }
 
         fieldset {
-              width: 100%;
-              padding: auto;
-            }
-
-        .form-group-row{
-            margin: 10px 5px;
+            width: 100%;
+            padding: auto;
         }
 
         h1{
@@ -55,80 +51,80 @@
         <h1> Create New Reimbursement Form </h1>
         <form action="/TRMS/reimbursements" method="POST">
 
-        <div class="form-group row">
-            <label for="eventType" class="col-sm-2 col-form-label">Event Type</label>
-            <div class="col-sm-10">
-                <select class="custom-select my-1 mr-sm-2" id="eventType">
-                    <option selected>Event Type</option>
-                    <option value="UniversityCourses">University Courses</option>
-                    <option value="Seminars">Seminars</option>
-                    <option value="CertificationPrep">Certification Preparation Classes</option>
-                    <option value="Certification">Certification</option>
-                    <option value="TechnicalTraining">Technical Training</option>
-                    <option value="Other">Other</option>
-                  </select>
+            <div class="form-group row">
+                <label for="eventType" class="col-sm-2 col-form-label">Event Type</label>
+                <div class="col-sm-10">
+                    <select class="custom-select my-1 mr-sm-2" id="eventType">
+                        <option selected>Event Type</option>
+                        <option value="UniversityCourses">University Courses</option>
+                        <option value="Seminars">Seminars</option>
+                        <option value="CertificationPrep">Certification Preparation Classes</option>
+                        <option value="Certification">Certification</option>
+                        <option value="TechnicalTraining">Technical Training</option>
+                        <option value="Other">Other</option>
+                      </select>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-          <label for="location" class="col-sm-2 col-form-label">Location</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="location" placeholder="City, State">
-          </div>
-        </div>
-    
-        <div class="form-group row">
-          <label for="description" class="col-sm-2 col-form-label">Description</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="description" placeholder="Description">
-          </div>
-        </div>
+            <div class="form-group row">
+              <label for="location" class="col-sm-2 col-form-label">Location</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="location" placeholder="City, State">
+              </div>
+            </div>
 
-        <div class="form-group row">
-          <label for="startTime" class="col-sm-2 col-form-label">Start Date</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="startTime" placeholder="MM/DD/YYYY">
-          </div>
-        </div>
+            <div class="form-group row">
+              <label for="description" class="col-sm-2 col-form-label">Description</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="description" placeholder="Description">
+              </div>
+            </div>
 
-        <div class="form-group row">
-          <label for="endTime" class="col-sm-2 col-form-label">End Date</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="endTime" placeholder="MM/DD/YYYY">
-          </div>
-        </div>
-    
-        <div class="form-group row">
-          <label for="gradingType" class="col-sm-2 col-form-label">Grading Type</label>
-          <div class="col-sm-10">
-              <select class="custom-select my-1 mr-sm-2" id="gradingType">
-                  <option selected>Grading Type</option>
-                  <option value="Performance">Performance</option>
-                  <option value="Grade">Grade</option>
-                  <option value="Presentation">Presentation</option>
-                </select>
-          </div>
-        </div>
+            <div class="form-group row">
+              <label for="startTime" class="col-sm-2 col-form-label">Start Date</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="startTime" placeholder="MM/DD/YYYY">
+              </div>
+            </div>
 
-        <div class="form-group row">
-          <label for="grade" class="col-sm-2 col-form-label">Grade</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="grade" placeholder="Final grade">
-          </div>
-        </div>
+            <div class="form-group row">
+              <label for="endTime" class="col-sm-2 col-form-label">End Date</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="endTime" placeholder="MM/DD/YYYY">
+              </div>
+            </div>
 
-        <div class="form-group row">
-          <label for="cost" class="col-sm-2 col-form-label">Tuition</label>
-          <div class="col-sm-10">
-            <input type="number" class="form-control" id="cost" placeholder="Tuition amount">
-          </div>
-        </div>
-    
-        <div class="col-auto my-1">
-            <button id="submitBtn" onclick="addForm()" type="button" class="btn btn-primary">Submit</button>
-        </div>
+            <div class="form-group row">
+              <label for="gradingType" class="col-sm-2 col-form-label">Grading Type</label>
+              <div class="col-sm-10">
+                  <select class="custom-select my-1 mr-sm-2" id="gradingType">
+                      <option selected>Grading Type</option>
+                      <option value="Performance">Performance</option>
+                      <option value="Grade">Grade</option>
+                      <option value="Presentation">Presentation</option>
+                    </select>
+              </div>
+            </div>
 
-        <p id="evMessageBox"></p>
+            <div class="form-group row">
+              <label for="grade" class="col-sm-2 col-form-label">Grade</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="grade" placeholder="Final grade">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="cost" class="col-sm-2 col-form-label">Tuition</label>
+              <div class="col-sm-10">
+                <input type="number" class="form-control" id="cost" placeholder="Tuition amount">
+              </div>
+            </div>
+
+            <div class="col-auto my-1">
+                <button id="submitBtn" onclick="addForm()" type="button" class="btn btn-primary">Submit</button>
+            </div>
+
+            <p id="evMessageBox"></p>
 
         </form>
 
@@ -137,7 +133,7 @@
 
         <!-- Check my request -->
         <fieldset>
-            <h2> My Reimbursement Request </h2>
+            <h1> My Reimbursement Request </h1>
 <!--            <div class="input-group mb-3">-->
 <!--              <input id = "EventIdInput" type="number" class="form-control" placeholder="Reimbursement ID" aria-label="EventID" aria-describedby="basic-addon1">-->
 <!--            </div>-->

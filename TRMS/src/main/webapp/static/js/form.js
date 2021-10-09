@@ -74,11 +74,6 @@ function getEmployeeRequests() {
             let requests = JSON.parse(this.responseText)
             console.log(requests);
 
-            if (this.responseText == "[]" || this.responseText == "{}") {
-                document.getElementById("success").innerHTML = "No Requests to list"
-
-            }
-
             const tableRow = document.getElementById("tableRow")
             tableRow.innerHTML = "";
             let count = 1;
@@ -104,6 +99,8 @@ function getEmployeeRequests() {
                 `
                 tableRow.innerHTML += content;
                 count += 1;
+                if(res.benco_approval == "Approve")
+                    alert("Congratulation! Your request #" + res.id + " is approved!!!");
             })
         }
     };

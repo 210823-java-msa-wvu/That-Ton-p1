@@ -1,5 +1,11 @@
 document.getElementById("employee_name").innerHTML = "Welcome " + localStorage.getItem("username") + "!!!";
 var requests;
+let title1 = localStorage.getItem("title");
+
+if (title1 == "\"Benco\"") {
+    document.getElementById("ben_co").style.display = 'block';
+}
+
 const idArray = [];
 getRequests();
 idList();
@@ -58,9 +64,15 @@ function makeDecision(){
 
     let rbID = document.getElementById("re_id").value;
     let decision = document.getElementById("decision").value;
+    let updateAmount = document.getElementById("cost").value;
+
     let title = localStorage.getItem("title");
     let index = idArray.indexOf(parseInt(rbID));
 
+    if (updateAmount > 1000)
+        updateAmount = 1000;
+    else if (updateAmount == '')
+        updateAmount = requests[index].amount;
 
     console.log(idArray);
     console.log(index);
@@ -128,7 +140,7 @@ function makeDecision(){
         "end_date": requests[index].end_date,
         "grade_type": requests[index].grade_type,
         "grade": requests[index].grade,
-        "amount": requests[index].amount,
+        "amount": updateAmount,
         "sup_approval": requests[index].sup_approval,
         "head_approval": requests[index].head_approval,
         "benco_approval": decision
