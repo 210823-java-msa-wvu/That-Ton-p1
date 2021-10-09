@@ -6,10 +6,9 @@
 
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">
-            jdbc:postgresql://java-project0-project1.caushcndhfli.us-east-2.rds.amazonaws.com:5432/postgres?currentSchema=p1
         </property>
-        <property name="hibernate.connection.username">thatton</property>
-        <property name="hibernate.connection.password">password1234</property>
+        <property name="hibernate.connection.username"></property>
+        <property name="hibernate.connection.password"></property>
 
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
 
