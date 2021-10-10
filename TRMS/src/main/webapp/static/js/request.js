@@ -65,14 +65,68 @@ function makeDecision(){
     let rbID = document.getElementById("re_id").value;
     let decision = document.getElementById("decision").value;
     let updateAmount = document.getElementById("cost").value;
+    let managerDecision, bencoDecision, sup_ma_dec, sup_ben_dec, ma_ben_dec;
+
+    managerDecision = decision;
+    bencoDecision = decision;
 
     let title = localStorage.getItem("title");
     let index = idArray.indexOf(parseInt(rbID));
 
+    // Limit maximum reimbursement amount to 1000
     if (updateAmount > 1000)
         updateAmount = 1000;
     else if (updateAmount == '')
         updateAmount = requests[index].amount;
+
+    // Prevent Manager & BenCo update decision if Supervisor's decision is reject
+    if (requests[index].sup_approval == "Reject" && (title == "\"Manager\"" || title == "\"Benco\"")){
+        managerDecision = "";
+        bencoDecision = "";
+        alert("You can't approve reimbursement #" + rbID + " because it is rejected by Supervisor " + requests[index].employee.sup_name + "!");
+    }
+
+    // Prevent BenCo update decision if Manager's decision is reject
+    if (requests[index].head_approval == "Reject" && title == "\"Benco\""){
+        bencoDecision = "";
+        alert("You can't approve reimbursement #" + rbID + " because it is rejected by Head of Department " + requests[index].employee.head_name + "!");
+    }
+
+    // If all 3 types of decision are approve, but Supervisor later changes the decision to reject, then remove decisions from Manager and BenCo
+    if ((decision == "Reject") && (title == "\"Supervisor\"") && (requests[index].head_approval != "") && (requests[index].benco_approval != "")) {
+        sup_ma_dec = "";
+        sup_ben_dec= "";
+        alert("Removed Manager & BenCo approvals from reimbursement #" + rbID + "!");
+    }
+    else {
+        sup_ma_dec = requests[index].head_approval;
+        sup_ben_dec = requests[index].benco_approval;
+    }
+
+    // If all 3 types of decision are approve, but Manager later changes the decision to reject, then remove decisions from BenCo
+    if ((decision == "Reject") && (title == "\"Manager\"") && (requests[index].benco_approval != "")) {
+        ma_ben_dec= "";
+        alert("Removed BenCo approval from reimbursement #" + rbID + "!");
+    }
+    else {
+        ma_ben_dec = requests[index].benco_approval;
+    }
+
+    // Prevent BenCo update decision if decisions from Supervisor and Manager are blank
+    if ((requests[index].head_approval == "") && (requests[index].sup_approval == "") && (title == "\"Benco\"")) {
+        bencoDecision = "";
+        alert("Reimbursement #" + rbID + " must waiting for approval from Supervisor " + requests[index].employee.sup_name + " and Manager " + requests[index].employee.head_name + "!");
+    }
+    else if ((requests[index].head_approval == "" && (requests[index].sup_approval != "Reject")) && (title == "\"Benco\"")) {
+        bencoDecision = "";
+        alert("Reimbursement #" + rbID + " must waiting for approval from Manager " + requests[index].employee.head_name + "!");
+    }
+
+    // Prevent Manager update decision if decisions from Supervisor are blank
+    if ((requests[index].sup_approval == "") && (title == "\"Manager\"")) {
+        bencoDecision = "";
+        alert("Reimbursement #" + rbID + " must waiting for approval from Supervisor " + requests[index].employee.sup_name + "!");
+    }
 
     console.log(idArray);
     console.log(index);
@@ -106,8 +160,8 @@ function makeDecision(){
         "grade": requests[index].grade,
         "amount": requests[index].amount,
         "sup_approval": decision,
-        "head_approval": requests[index].head_approval,
-        "benco_approval": requests[index].benco_approval
+        "head_approval": sup_ma_dec,
+        "benco_approval": sup_ben_dec
     }
 
     var head_updatedRequest = {
@@ -124,8 +178,8 @@ function makeDecision(){
         "grade": requests[index].grade,
         "amount": requests[index].amount,
         "sup_approval": requests[index].sup_approval,
-        "head_approval": decision,
-        "benco_approval": requests[index].benco_approval
+        "head_approval": managerDecision,
+        "benco_approval": ma_ben_dec
     }
 
     var benco_updatedRequest = {
@@ -143,7 +197,7 @@ function makeDecision(){
         "amount": updateAmount,
         "sup_approval": requests[index].sup_approval,
         "head_approval": requests[index].head_approval,
-        "benco_approval": decision
+        "benco_approval": bencoDecision
     }
 
     var finalupdate;
@@ -160,7 +214,7 @@ function makeDecision(){
     finalupdate = JSON.stringify(finalupdate);
     xhttp.send(finalupdate);
     console.log("Success!");
-    alert("Reimbursement # " + rbID + " is updated!");
+    // alert("Reimbursement # " + rbID + " is updated!");
     location.reload();
 }
 
