@@ -25,16 +25,20 @@
           margin: 5px 5px;
         }
 
+        p{
+            margin: 2px 5px;
+        }
+
         #navBar{
             background-color: black;
             padding: 10px;
         }
 
-        #submitBtn, #getReimbursementButton {
+        #submitBtn, #getReimbursementButton, #getBalance {
             background-color: black;
             border-color: black;
         }
-        #getReimbursementButton {
+        #getReimbursementButton, #getBalance {
             margin: 10px 10px;
         }
 
@@ -50,9 +54,9 @@
             </span>
         </div>
 
-        <p id="employee_name"></p>
+        <h5 id="employee_name"></h5>
         <h1> Create New Reimbursement Form </h1>
-        <form action="/TRMS/reimbursements" method="POST">
+        <form action="/TRMS/reimbursements" method="POST" id="newRequest">
 
             <div class="form-group row">
                 <label for="eventType" class="col-sm-2 col-form-label">Event Type</label>
@@ -119,7 +123,7 @@
             <div class="form-group row">
               <label for="cost" class="col-sm-2 col-form-label">Tuition</label>
               <div class="col-sm-10">
-                <input type="number" class="form-control" id="cost" placeholder="Tuition amount">
+                <input type="number" class="form-control" id="cost" placeholder="$">
               </div>
             </div>
 
@@ -130,16 +134,40 @@
             <p id="evMessageBox"></p>
 
         </form>
-
-        <br><br>
         <hr>
+
+
+        <!-- Check my balance -->
+        <fieldset>
+            <h1> My Reimbursement Balance </h1>
+            <button id="getBalance" onclick="getMyBalance()" type="button" class="btn btn-primary">Get</button>
+
+            <table class="table table-light table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Available Reimbursement</th>
+                    <th scope="col">Pending Reimbursement</th>
+                    <th scope="col">Awarded Reimbursement</th>
+                    <th scope="col">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="available_rb"></th>
+                        <td id="pending_rb"></td>
+                        <td id="awarded_rb"></td>
+                        <td id="total_rb"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </fieldset>
+        <hr>
+
 
         <!-- Check my request -->
         <fieldset>
             <h1> My Reimbursement Request </h1>
-<!--            <div class="input-group mb-3">-->
-<!--              <input id = "EventIdInput" type="number" class="form-control" placeholder="Reimbursement ID" aria-label="EventID" aria-describedby="basic-addon1">-->
-<!--            </div>-->
             <button id="getReimbursementButton" onclick="getEmployeeRequests()" type="button" class="btn btn-primary">Get</button>
   
             <table class="table table-light table-striped">

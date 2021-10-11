@@ -1,25 +1,26 @@
 document.getElementById("employee_name").innerHTML = "Welcome " + localStorage.getItem("username") + "!!!";
-var requests;
+var requests, employees, emp_id, updateAmount, change;
 let title1 = localStorage.getItem("title");
 
 if (title1 == "\"Benco\"") {
     document.getElementById("ben_co").style.display = 'block';
 }
 
-const idArray = [];
+const idArray = [], empArray = [];
 getRequests();
 idList();
+employeeList();
+
 
 function getRequests() {
 
     let xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
-        console.log("Current Ready State: " + this.readyState);
-
         if (this.readyState == 4 && this.status == 200) {
             //We have a successful and completed request and can now process the response.
             requests = JSON.parse(this.responseText)
+            console.log("Reimbursement lists");
             console.log(requests);
 
             const tableRow = document.getElementById("tableRow")
@@ -60,12 +61,14 @@ function getRequests() {
 
 }
 
+
 function makeDecision(){
 
     let rbID = document.getElementById("re_id").value;
     let decision = document.getElementById("decision").value;
-    let updateAmount = document.getElementById("cost").value;
+    updateAmount = document.getElementById("cost").value;
     let managerDecision, bencoDecision, sup_ma_dec, sup_ben_dec, ma_ben_dec;
+
 
     managerDecision = decision;
     bencoDecision = decision;
@@ -73,11 +76,18 @@ function makeDecision(){
     let title = localStorage.getItem("title");
     let index = idArray.indexOf(parseInt(rbID));
 
-    // Limit maximum reimbursement amount to 1000
-    if (updateAmount > 1000)
-        updateAmount = 1000;
-    else if (updateAmount == '')
+    emp_id = requests[index].employee.employee_id;
+    if (updateAmount == '' || decision == "Reject")
         updateAmount = requests[index].amount;
+
+    change = updateAmount - requests[index].amount;
+
+    // Limit maximum reimbursement amount to available reimbursement
+    if (change >= requests[index].employee.available) {
+        updateAmount = requests[index].employee.available + requests[index].amount;
+        change = requests[index].employee.available;
+    }
+
 
     // Prevent Manager & BenCo update decision if Supervisor's decision is reject
     if (requests[index].sup_approval == "Reject" && (title == "\"Manager\"" || title == "\"Benco\"")){
@@ -117,20 +127,23 @@ function makeDecision(){
         bencoDecision = "";
         alert("Reimbursement #" + rbID + " must waiting for approval from Supervisor " + requests[index].employee.sup_name + " and Manager " + requests[index].employee.head_name + "!");
     }
-    else if ((requests[index].head_approval == "" && (requests[index].sup_approval != "Reject")) && (title == "\"Benco\"")) {
+    else if ((requests[index].head_approval == "" && requests[index].sup_approval != "Reject") && (title == "\"Benco\"")) {
         bencoDecision = "";
         alert("Reimbursement #" + rbID + " must waiting for approval from Manager " + requests[index].employee.head_name + "!");
     }
 
-    // Prevent Manager update decision if decisions from Supervisor are blank
+    // Prevent Manager update decision if decision from Supervisor is blank
     if ((requests[index].sup_approval == "") && (title == "\"Manager\"")) {
-        bencoDecision = "";
+        managerDecision = "";
         alert("Reimbursement #" + rbID + " must waiting for approval from Supervisor " + requests[index].employee.sup_name + "!");
     }
 
-    console.log(idArray);
-    console.log(index);
-    console.log(requests[index]);
+    // Prevent BenCo update amount if request is already got 3 approvals
+    if (decision == "Approve" && requests[index].head_approval == "Approve" && requests[index].sup_approval == "Approve" && requests[index].benco_approval == "Approve") {
+        updateAmount = requests[index].amount;
+        alert("You already approved reimbursement #" + rbID + "!")
+    }
+
 
     let xhttp = new XMLHttpRequest();
     let url = `http://localhost:8080/TRMS/reimbursements/`;
@@ -200,22 +213,76 @@ function makeDecision(){
         "benco_approval": bencoDecision
     }
 
-    var finalupdate;
+    if (title == "\"Supervisor\"") {
+        console.log(sup_updatedRequest);
+        sup_updatedRequest = JSON.stringify(sup_updatedRequest);
+        xhttp.send(sup_updatedRequest);
+        console.log("Success!");
+        alert("Reimbursement # " + rbID + " is updated!");
+        location.reload();
+    }
+    else if (title == "\"Manager\"") {
+        console.log(head_updatedRequest);
+        head_updatedRequest = JSON.stringify(head_updatedRequest);
+        xhttp.send(head_updatedRequest);
+        console.log("Success!");
+        alert("Reimbursement # " + rbID + " is updated!");
+        location.reload();
+    }
+    else {
+        console.log(benco_updatedRequest);
+        benco_updatedRequest = JSON.stringify(benco_updatedRequest);
+        xhttp.send(benco_updatedRequest);
+        console.log("Success!");
+        alert("Reimbursement # " + rbID + " is updated!");
+        if (decision == "Approve" && requests[index].head_approval == "Approve" && requests[index].sup_approval == "Approve")
+            updateBalance();
+        //location.reload();
+    }
 
-    if (title == "\"Supervisor\"")
-        finalupdate = sup_updatedRequest;
-    else if (title == "\"Manager\"")
-        finalupdate = head_updatedRequest;
-    else
-        finalupdate = benco_updatedRequest;
+}
 
+function updateBalance(){
+    updateAmount = parseFloat(updateAmount);
+    console.log(empArray);
+    let index = empArray.indexOf(parseInt(emp_id));
+    let awarded = employees[index].awarded + updateAmount;
+    console.log(typeof awarded);
+    let pending = employees[index].pending + change - updateAmount;
+    console.log("Pending = " + employees[index].pending + " + " + change + " - " + updateAmount);
 
-    console.log(finalupdate);
-    finalupdate = JSON.stringify(finalupdate);
-    xhttp.send(finalupdate);
-    console.log("Success!");
-    // alert("Reimbursement # " + rbID + " is updated!");
-    location.reload();
+    let balance = 1000 - awarded - pending;
+    console.log("Balance = " + 1000 + " - " + awarded + " - " + pending)
+
+    let xhttp = new XMLHttpRequest();
+    let url = `http://localhost:8080/TRMS/employees/`;
+    xhttp.open("PUT", url + emp_id, true);
+
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+
+            console.log(this.responseText);
+
+        }
+    };
+
+    var balance_update = {
+        "employee_id": emp_id,
+        "first_name": employees[index].first_name,
+        "last_name": employees[index].last_name,
+        "sup_name": employees[index].sup_name,
+        "head_name": employees[index].head_name,
+        "dept_id": employees[index].dept_id,
+        "available": balance,
+        "awarded": awarded,
+        "pending": pending
+    }
+
+    console.log(balance_update);
+    balance_update = JSON.stringify(balance_update);
+    xhttp.send(balance_update);
 }
 
 function idList() {
@@ -241,7 +308,6 @@ function idList() {
                 count += 1;
             })
         }
-        console.log(count);
     };
 
     //step 3
@@ -249,6 +315,32 @@ function idList() {
 
     //step 4
     xhr.send();
+
+}
+
+function employeeList() {
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            //We have a successful and completed request and can now process the response.
+            employees = JSON.parse(this.responseText);
+            // console.log("Employees lists");
+            // console.log(employees);
+
+            employees.forEach(res => {
+                empArray.push(res.employee_id);
+            });
+        }
+    }
+
+    let url = `http://localhost:8080/TRMS/employees`
+
+    //step 3
+    xhttp.open("GET", url, true);
+
+    //step 4
+    xhttp.send();
 
 }
 

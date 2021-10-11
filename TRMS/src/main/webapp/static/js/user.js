@@ -12,9 +12,22 @@ async function getUser() {
         })
         .catch(err => console.log(err));
 
-}
+    let xhttp = new XMLHttpRequest();
+    let eid = localStorage.getItem("employeeID")
 
-// function populateData(data) {
-//
-// }
-// document.getElementById("bencoApproval").innerHTML = eventJson.benco_approval;
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            //We have a successful and completed request and can now process the response.
+            let employee = JSON.parse(this.responseText);
+        }
+    }
+
+    let eurl = `http://localhost:8080/TRMS/employees/`
+
+    //step 3
+    xhttp.open("GET", eurl + eid, true);
+
+    //step 4
+    xhttp.send();
+
+}

@@ -1,3 +1,9 @@
+
+var employeeInfo, current_rb;
+var eid = localStorage.getItem("employeeID");
+var currentPending;
+employee();
+
 document.getElementById("employee_name").innerHTML = "Welcome " + localStorage.getItem("username") + "!!!";
 
 async function addForm(){
@@ -12,24 +18,26 @@ async function addForm(){
     let grade_input = document.getElementById("grade").value;
     let cost_input = document.getElementById("cost").valueAsNumber;
 
-    if(eventType_input == "UniversityCourses")
-        cost_input = cost_input * 0.8;
-    else if (eventType_input == "Seminars")
-        cost_input = cost_input * 0.6;
-    else if (eventType_input == "CertificationPrep")
-        cost_input = cost_input * 0.75;
-    else if (eventType_input == "Certification")
-        cost_input = cost_input;
-    else if (eventType_input == "TechnicalTraining")
-        cost_input = cost_input * 0.9;
-    else
-        cost_input = cost_input * 0.3;
 
-    if (cost_input > 1000)
-        cost_input = 1000;
+
+    if(eventType_input == "UniversityCourses")
+        current_rb = cost_input * 0.8;
+    else if (eventType_input == "Seminars")
+        current_rb = cost_input * 0.6;
+    else if (eventType_input == "CertificationPrep")
+        current_rb = cost_input * 0.75;
+    else if (eventType_input == "Certification")
+        current_rb = cost_input;
+    else if (eventType_input == "TechnicalTraining")
+        current_rb = cost_input * 0.9;
+    else
+        current_rb = cost_input * 0.3;
+
+    if (current_rb >= employeeInfo.available)
+        current_rb = employeeInfo.available;
 
     let newForm = {
-        "employee": {"employee_id": localStorage.getItem("employeeID")},
+        "employee": {"employee_id": eid},
         "event_type": eventType_input,
         "event_location": location_input,
         "event_description": description_input,
@@ -37,7 +45,7 @@ async function addForm(){
         "end_date": end_time_input,
         "grade_type": gradingType_input,
         "grade": grade_input,
-        "amount": cost_input,
+        "amount": current_rb,
         "sup_approval": "",
         "head_approval": "",
         "benco_approval": ""
@@ -52,10 +60,83 @@ async function addForm(){
             'Content-Type': 'application/json'
         }
     });
-
+    updateBalance();
     document.getElementById("evMessageBox").innerHTML = "Successfully submitted!";
+    document.getElementById("newRequest").reset();
+    employee();
+}
+
+
+function updateBalance(){
+
+    let balance;
+    let awarded = employeeInfo.awarded;
+    let pending;
+
+    pending = currentPending + current_rb;
+    console.log("Pending = " + currentPending + " + " + current_rb);
+    balance = 1000 - pending - awarded;
+    console.log("Balance = " + "1000 - " + pending + " - " + awarded);
+
+    console.log(employeeInfo);
+
+    let xhttp = new XMLHttpRequest();
+    let url = `http://localhost:8080/TRMS/employees/`;
+    xhttp.open("PUT", url + eid, true);
+
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+
+            console.log(this.responseText);
+
+        }
+    };
+
+    var balance_update = {
+        "employee_id": eid,
+        "first_name": employeeInfo.first_name,
+        "last_name": employeeInfo.last_name,
+        "sup_name": employeeInfo.sup_name,
+        "head_name": employeeInfo.head_name,
+        "dept_id": employeeInfo.dept_id,
+        "available": balance,
+        "awarded": awarded,
+        "pending": pending
+    }
+
+    console.log(balance_update);
+    balance_update = JSON.stringify(balance_update);
+    xhttp.send(balance_update);
+}
+
+
+function getMyBalance() {
+    let xhttp = new XMLHttpRequest();
+    let eid = localStorage.getItem("employeeID");
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            //We have a successful and completed request and can now process the response.
+            let employeeJson = JSON.parse(this.responseText);
+            document.getElementById("available_rb").innerHTML = "$" + employeeJson.available;
+            document.getElementById("pending_rb").innerHTML = "$" + employeeJson.pending;
+            document.getElementById("awarded_rb").innerHTML = "$" + employeeJson.awarded;
+            document.getElementById("total_rb").innerHTML = "$" + (employeeJson.awarded + employeeJson.pending + employeeJson.available);
+        }
+    }
+
+    let url = `http://localhost:8080/TRMS/employees/`
+
+    //step 3
+    xhttp.open("GET", url + eid, true);
+
+    //step 4
+    xhttp.send();
 
 }
+
 
 function getEmployeeRequests() {
     let url = 'http://localhost:8080/TRMS/reimbursements/';
@@ -99,8 +180,9 @@ function getEmployeeRequests() {
                 `
                 tableRow.innerHTML += content;
                 count += 1;
-                if(res.benco_approval == "Approve")
+                if(res.benco_approval == "Approve") {
                     alert("Congratulation! Your request #" + res.id + " is approved!!!");
+                }
             })
         }
     };
@@ -109,11 +191,38 @@ function getEmployeeRequests() {
     xhr.send();
 }
 
+
+function employee() {
+    let xhttp = new XMLHttpRequest();
+    let eid = localStorage.getItem("employeeID");
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            //We have a successful and completed request and can now process the response.
+            employeeInfo = JSON.parse(this.responseText);
+            // console.log("Employees lists");
+            console.log(employeeInfo);
+            console.log(employeeInfo.available);
+            currentPending = employeeInfo.pending
+            console.log(currentPending);
+        }
+    }
+
+    let url = `http://localhost:8080/TRMS/employees/`
+
+    //step 3
+    xhttp.open("GET", url + eid, true);
+
+    //step 4
+    xhttp.send();
+
+}
+
+
 function userLogout(){
     // Clear local storage
     localStorage.removeItem("username");
     localStorage.removeItem("userLoginObj");
     localStorage.removeItem("title");
     localStorage.removeItem("employeeID");
-
 }

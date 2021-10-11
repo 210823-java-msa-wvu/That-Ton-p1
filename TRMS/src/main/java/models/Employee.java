@@ -26,6 +26,15 @@ public class Employee {
     @Column(name = "dep_id")
     private Integer dept_id;
 
+    @Column(name = "available_reimbursement")
+    private Double available;
+
+    @Column(name = "awarded_reimbursement")
+    private Double awarded;
+
+    @Column(name = "pending_reimbursement")
+    private Double pending;
+
     public Employee() {
     }
 
@@ -36,6 +45,18 @@ public class Employee {
         this.sup_name = sup_name;
         this.head_name = head_name;
         this.dept_id = dept_id;
+    }
+
+    public Employee(int employee_id, String first_name, String last_name, String sup_name, String head_name, Integer dept_id, Double available, Double awarded, Double pending) {
+        this.employee_id = employee_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.sup_name = sup_name;
+        this.head_name = head_name;
+        this.dept_id = dept_id;
+        this.available = available;
+        this.awarded = awarded;
+        this.pending = pending;
     }
 
     public int getEmployee_id() {
@@ -86,6 +107,30 @@ public class Employee {
         this.dept_id = dept_id;
     }
 
+    public Double getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Double available) {
+        this.available = available;
+    }
+
+    public Double getAwarded() {
+        return awarded;
+    }
+
+    public void setAwarded(Double awarded) {
+        this.awarded = awarded;
+    }
+
+    public Double getPending() {
+        return pending;
+    }
+
+    public void setPending(Double pending) {
+        this.pending = pending;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -95,6 +140,9 @@ public class Employee {
                 ", sup_name='" + sup_name + '\'' +
                 ", head_name='" + head_name + '\'' +
                 ", dept_id=" + dept_id +
+                ", available=" + available +
+                ", awarded=" + awarded +
+                ", pending=" + pending +
                 '}';
     }
 }

@@ -13,4 +13,12 @@ public class EmployeeServices {
     public Employee searchEmployeeById(Integer id) {return employeeRepo.getById(id);}
 
     public List<Employee> getAllEmployees() {return employeeRepo.getAll();}
+
+    public void updateEmployee(Employee r) {
+        if (employeeRepo.getById(r.getEmployee_id()) != null){
+            employeeRepo.update(r);
+        } else {
+            System.out.println("That reimbursement does not exist...");
+        }
+    }
 }

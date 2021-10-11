@@ -14,14 +14,12 @@ import java.io.IOException;
 public class ReimbursementController implements FrontController{
 
     private ReimbursementServices reimbursementServices = new ReimbursementServices();
-    private UserServices userServices = new UserServices();
     private ObjectMapper om = new ObjectMapper();
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // Getting the attribute we set in the RequestHandler's handle() method
         String path = (String) request.getAttribute("path");
         System.out.println("Path attribute: " + path);
-        String username = request.getParameter("username");
 
         if (path == null || path.equals("")) { // http://localhost:8080/TRMS/reimbursements
 
